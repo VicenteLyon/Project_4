@@ -1,4 +1,4 @@
-//John R. & Vicente L.
+	//John R. & Vicente L.
 import java.net.*;
 import java.io.*;
 import java.util.ArrayList;
@@ -18,7 +18,7 @@ public class StoreServer {
         else if (args.length > 1 )
             System.out.println("Usage:  java StoreServer <listening-port>");
         // Read account info from file
-        readAccounts(accounts); 
+     //  readAccounts(accounts); 
         // Create listener socket and begin listening
         ServerSocket listener;  // Listens for incoming connections.
         Socket client;      // For communication with the connecting program.
@@ -29,7 +29,7 @@ public class StoreServer {
             while (true) {
             	// Accept next connection request and handle it.
             	client = listener.accept(); 
-                System.out.println("Connection from " + client.getInetAddress().toString() );
+              //  System.out.println("Connection from " + client.getInetAddress().toString() );
                 StoreThread clientThread = new StoreThread(client); 
                 clientThread.start();
                 /*
@@ -48,7 +48,7 @@ public class StoreServer {
         }
 
     }  // end main()
-    
+    /*
     // Read from data file to load account information
     public static void readAccounts(ArrayList<Account> accounts) {
         File dataFile = new File("accounts.txt");
@@ -64,26 +64,29 @@ public class StoreServer {
                 int separatorPosition3 = accountEntry.indexOf('%', separatorPosition2 + 1);
                 if (separatorPosition == -1)
                     throw new IOException("File is not a valid data file.");
-                String accountType = accountEntry.substring(0, separatorPosition);
-                String username = accountEntry.substring(separatorPosition + 1, separatorPosition2);
-                String password = accountEntry.substring(separatorPosition2 + 1, separatorPosition3);
+                String accountType = accountEntry.substring(0, separatorPosition).trim();
+                String username = accountEntry.substring(separatorPosition + 1, separatorPosition2).trim();
+                String password = accountEntry.substring(separatorPosition2 + 1, separatorPosition3).trim();
                 if (accountType.equals("admin")) { 
-                	System.out.println(username + password);
+                	//System.out.println(username + "\n" + password);
                 	accounts.add(new AdminAccount(username, password, accounts));
                 }
                 else {
                     String profile = accountEntry.substring(separatorPosition3 + 1);
                 	accounts.add(new CustomerAccount(username, password, profile));
-                	System.out.println(username + password); 
+                	//System.out.println(username +  "\n" + password); 
             	}
             }
-        }
+            for(int i =0; i < accounts.size(); i++) { 
+            	System.out.println(accounts.get(i).getUsername());
+            }
+         }
         catch (IOException e) {
             System.out.println("Error in data file.");
             System.exit(1);
         }
     }//end of readAccounts method 
-    
+   */
     
     /*
     

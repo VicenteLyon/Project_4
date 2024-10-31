@@ -1,7 +1,6 @@
 //John R. & Vicente L. 
 import java.io.*; 
-import java.net.*; 
-import java.util.ArrayList;
+import java.net.*;
 import java.util.*;
 
 public class StoreThread extends Thread {
@@ -17,6 +16,7 @@ public class StoreThread extends Thread {
 	}//end of StoreThread method 
 
 	public void run() { 
+		readAccounts(accounts);
 		try { 
 			incoming = new BufferedReader(new InputStreamReader(client.getInputStream()));
 			outgoing = new PrintWriter(client.getOutputStream(), true); 
@@ -61,12 +61,51 @@ public class StoreThread extends Thread {
 			System.out.println("Error: " + e); 
 		}
 	}//end of run method 
+	
+	 public static void readAccounts(ArrayList<Account> accounts) {
+	        File dataFile = new File("accounts.txt");
+	        if ( ! dataFile.exists() ) {
+	            System.out.println("No data file found.");
+	            System.exit(1);
+	        }
+	        try( Scanner scanner = new Scanner(dataFile) ) {
+	            while (scanner.hasNextLine()) {
+	                String accountEntry = scanner.nextLine();
+	                int separatorPosition = accountEntry.indexOf('%');
+	                int separatorPosition2 = accountEntry.indexOf('%', separatorPosition + 1);
+	                int separatorPosition3 = accountEntry.indexOf('%', separatorPosition2 + 1);
+	                if (separatorPosition == -1)
+	                    throw new IOException("File is not a valid data file.");
+	                String accountType = accountEntry.substring(0, separatorPosition).trim();
+	                String username = accountEntry.substring(separatorPosition + 1, separatorPosition2).trim();
+	                String password = accountEntry.substring(separatorPosition2 + 1, separatorPosition3).trim();
+	                if (accountType.equals("admin")) { 
+	                	//System.out.println(username + "\n" + password);
+	                	accounts.add(new AdminAccount(username, password, accounts));
+	                }
+	                else {
+	                    String profile = accountEntry.substring(separatorPosition3 + 1);
+	                	accounts.add(new CustomerAccount(username, password, profile));
+	                	//System.out.println(username +  "\n" + password); 
+	            	}
+	            }
+	            for(int i =0; i < accounts.size(); i++) { 
+	            	System.out.println(accounts.get(i).getUsername());
+	            }
+	         }
+	        catch (IOException e) {
+	            System.out.println("Error in data file.");
+	            System.exit(1);
+	        }
+	 }//end of ReadAccounts method
+	
+	
 
 	public void login(ArrayList<Account> accounts, BufferedReader incoming, PrintWriter outgoing) {
 		try {
-			String username = incoming.readLine();
-			String password = incoming.readLine();
-			System.out.println("Received: " + username + ", " + password);
+			String username = incoming.readLine().trim();
+			String password = incoming.readLine().trim();
+			System.out.println("Received: " + username + "," + password);
 			Account account;
 			String reply = "";
 			boolean foundUser = false;
