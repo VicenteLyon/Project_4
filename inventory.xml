@@ -1,0 +1,14 @@
+<INVENTORY>
+   <PRODUCT>
+      <stockNumber>45</stockNumber>
+      <description>Widget</description>
+   </PRODUCT>
+   <PRODUCT>
+      <stockNumber>91</stockNumber>
+      <description>Thingamajig</description>
+   </PRODUCT>
+   <PRODUCT>
+      <stockNumber>10</stockNumber>
+      <description>Doohickey</description>
+   </PRODUCT>
+</INVENTORY>
