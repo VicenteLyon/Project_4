@@ -1,0 +1,13 @@
+<ACCOUNTS>
+   <CUSTOMER>
+      <id>23</id>
+      <username>fenchurch</username>
+      <password>p</password>
+      <profile>Best customer ever</profile>
+   </CUSTOMER>
+   <ADMIN>
+      <id>30</id>
+      <username>arthur</username>
+      <password>password</password>
+   </ADMIN>
+</ACCOUNTS>
