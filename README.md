@@ -1,2 +1,2 @@
-#Kickstarter done 
-#Alpha Version: In Progress
+Kickstarter done 
+Alpha Version: In Progress
